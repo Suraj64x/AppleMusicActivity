@@ -71,6 +71,11 @@ internal class AppleMusicDiscordClient {
             songAlbum += "\u0000";
         }
 
+        // hack to show 1-character artist names
+        while (songArtist.Length < 2) {
+            songArtist += "\u0000";
+        }
+
         // pick the subtitle format to show
         var statusDisplay = StatusDisplayType.Details;
         switch (statusDisplayOptions) {
