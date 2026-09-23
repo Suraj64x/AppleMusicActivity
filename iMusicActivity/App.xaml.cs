@@ -1,4 +1,4 @@
-﻿﻿using Hardcodet.Wpf.TaskbarNotification;
+﻿using Hardcodet.Wpf.TaskbarNotification;
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -7,11 +7,11 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using Localisation = AMWin_RichPresence.Properties.Localisation;
+using Localisation = iMusicActivity.Properties.Localisation;
 using MessageBox = Wpf.Ui.Controls.MessageBox;
 using MessageBoxResult = Wpf.Ui.Controls.MessageBoxResult;
 
-namespace AMWin_RichPresence {
+namespace iMusicActivity {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
@@ -41,7 +41,7 @@ namespace AMWin_RichPresence {
         }
 
         internal static void ApplyLanguagePreference() {
-            var languageCode = NormalizeLanguageCode(AMWin_RichPresence.Properties.Settings.Default.Language);
+            var languageCode = NormalizeLanguageCode(iMusicActivity.Properties.Settings.Default.Language);
             var culture = languageCode == ""
                 ? InitialUICulture
                 : CultureInfo.GetCultureInfo(languageCode);
@@ -66,9 +66,9 @@ namespace AMWin_RichPresence {
         public LastFmCredentials lastFmCredentials {
             get {
                 var creds = new LastFmCredentials();
-                creds.apiKey = AMWin_RichPresence.Properties.Settings.Default.LastfmAPIKey;
-                creds.apiSecret = AMWin_RichPresence.Properties.Settings.Default.LastfmSecret;
-                creds.username = AMWin_RichPresence.Properties.Settings.Default.LastfmUsername;
+                creds.apiKey = iMusicActivity.Properties.Settings.Default.LastfmAPIKey;
+                creds.apiSecret = iMusicActivity.Properties.Settings.Default.LastfmSecret;
+                creds.username = iMusicActivity.Properties.Settings.Default.LastfmUsername;
                 creds.password = SettingsWindow.GetLastFMPassword();
                 return creds;
             }
@@ -77,7 +77,7 @@ namespace AMWin_RichPresence {
         public ListenBrainzCredentials listenBrainzCredentials {
             get {
                 var creds = new ListenBrainzCredentials();
-                creds.userToken = AMWin_RichPresence.Properties.Settings.Default.ListenBrainzUserToken;
+                creds.userToken = iMusicActivity.Properties.Settings.Default.ListenBrainzUserToken;
                 return creds;
             }
         }
@@ -96,33 +96,33 @@ namespace AMWin_RichPresence {
             }
 
             // try to auto detect region
-            if (AMWin_RichPresence.Properties.Settings.Default.AppleMusicRegion == "") {
+            if (iMusicActivity.Properties.Settings.Default.AppleMusicRegion == "") {
                 var region = RegionInfo.CurrentRegion.Name.ToLower();
                 if (Constants.ValidAppleMusicRegions.Contains(region)) {
-                    AMWin_RichPresence.Properties.Settings.Default.AppleMusicRegion = region;
+                    iMusicActivity.Properties.Settings.Default.AppleMusicRegion = region;
                 } else {
-                    AMWin_RichPresence.Properties.Settings.Default.AppleMusicRegion = Constants.DefaultAppleMusicRegion;
+                    iMusicActivity.Properties.Settings.Default.AppleMusicRegion = Constants.DefaultAppleMusicRegion;
                 }
-                AMWin_RichPresence.Properties.Settings.Default.Save();
+                iMusicActivity.Properties.Settings.Default.Save();
             }
-            logger?.Log($"Using region {AMWin_RichPresence.Properties.Settings.Default.AppleMusicRegion}");
+            logger?.Log($"Using region {iMusicActivity.Properties.Settings.Default.AppleMusicRegion}");
 
             // check for updates
-            if (AMWin_RichPresence.Properties.Settings.Default.CheckForUpdatesOnStartup) {
+            if (iMusicActivity.Properties.Settings.Default.CheckForUpdatesOnStartup) {
                 _ = CheckForUpdates();
             }
 
             // start Discord RPC
-            var statusDisplayOptions = (AppleMusicDiscordClient.RPStatusDisplayOptions)AMWin_RichPresence.Properties.Settings.Default.RPDisplayChoice;
-            var classicalComposerAsArtist = AMWin_RichPresence.Properties.Settings.Default.ClassicalComposerAsArtist;
+            var statusDisplayOptions = (AppleMusicDiscordClient.RPStatusDisplayOptions)iMusicActivity.Properties.Settings.Default.RPDisplayChoice;
+            var classicalComposerAsArtist = iMusicActivity.Properties.Settings.Default.ClassicalComposerAsArtist;
             discordClient = new(Constants.DiscordClientID, enabled: false, statusDisplayOptions: statusDisplayOptions, logger: logger);
 
             // start Last.FM scrobbler
-            var amRegion = AMWin_RichPresence.Properties.Settings.Default.AppleMusicRegion;
+            var amRegion = iMusicActivity.Properties.Settings.Default.AppleMusicRegion;
             lastFmScrobblerClient = new AppleMusicLastFmScrobbler(region: amRegion, logger: logger);
             _ = lastFmScrobblerClient.init(lastFmCredentials);
 
-            var lastFMApiKey = AMWin_RichPresence.Properties.Settings.Default.LastfmAPIKey;
+            var lastFMApiKey = iMusicActivity.Properties.Settings.Default.LastfmAPIKey;
             if (lastFMApiKey == null || lastFMApiKey == "") {
                 logger?.Log("No Last.FM API key found");
             }
@@ -132,29 +132,29 @@ namespace AMWin_RichPresence {
             _ = listenBrainzScrobblerClient.init(listenBrainzCredentials);
 
             // start Apple Music scraper
-            amScraper = new(lastFMApiKey, Constants.RefreshPeriod, classicalComposerAsArtist, AMWin_RichPresence.Properties.Settings.Default.AppleMusicRegion, (newInfo) => {
+            amScraper = new(lastFMApiKey, Constants.RefreshPeriod, classicalComposerAsArtist, iMusicActivity.Properties.Settings.Default.AppleMusicRegion, (newInfo) => {
 
                 // don't update scraper if Apple Music is paused or not open
-                if (newInfo != null && (AMWin_RichPresence.Properties.Settings.Default.ShowRPWhenMusicPaused || !newInfo.IsPaused)) {
+                if (newInfo != null && (iMusicActivity.Properties.Settings.Default.ShowRPWhenMusicPaused || !newInfo.IsPaused)) {
 
                     // Discord RP update
-                    if (AMWin_RichPresence.Properties.Settings.Default.EnableDiscordRP) {
+                    if (iMusicActivity.Properties.Settings.Default.EnableDiscordRP) {
                         discordClient.Enable();
                         discordClient.SetPresence(newInfo,
-                            AMWin_RichPresence.Properties.Settings.Default.ShowAppleMusicIcon,
-                            AMWin_RichPresence.Properties.Settings.Default.EnableRPCoverImages,
-                            AMWin_RichPresence.Properties.Settings.Default.ShowAlbumTitle);
+                            iMusicActivity.Properties.Settings.Default.ShowAppleMusicIcon,
+                            iMusicActivity.Properties.Settings.Default.EnableRPCoverImages,
+                            iMusicActivity.Properties.Settings.Default.ShowAlbumTitle);
                     } else {
                         discordClient.Disable();
                     }
 
                     // Last.FM scrobble update
-                    if (AMWin_RichPresence.Properties.Settings.Default.LastfmEnable) {
+                    if (iMusicActivity.Properties.Settings.Default.LastfmEnable) {
                         lastFmScrobblerClient.Scrobbleit(newInfo);
                     }
 
                     // ListenBrainz scrobble update
-                    if (AMWin_RichPresence.Properties.Settings.Default.ListenBrainzEnable) {
+                    if (iMusicActivity.Properties.Settings.Default.ListenBrainzEnable) {
                         listenBrainzScrobblerClient.Scrobbleit(newInfo);
                     }
                 } else {
@@ -194,7 +194,7 @@ namespace AMWin_RichPresence {
         }
 
         internal void UpdateRegion() {
-            var region = AMWin_RichPresence.Properties.Settings.Default.AppleMusicRegion;
+            var region = iMusicActivity.Properties.Settings.Default.AppleMusicRegion;
             logger?.Log($"Changed region to {region}");
             amScraper.ChangeRegion(region);
         }
@@ -211,7 +211,7 @@ namespace AMWin_RichPresence {
                 }
 
                 if (!Constants.HttpClient.DefaultRequestHeaders.UserAgent.Any()) {
-                    Constants.HttpClient.DefaultRequestHeaders.Add("User-Agent", "AMWin-RP");
+                    Constants.HttpClient.DefaultRequestHeaders.Add("User-Agent", "iMusicActivity");
                 }
 
                 var result = await Constants.HttpClient.GetStringAsync(Constants.GithubReleasesApiUrl);
@@ -242,10 +242,10 @@ namespace AMWin_RichPresence {
                         }
                     });
                 } else {
-                    logger?.Log("No AMWin-RP updates available.");
+                    logger?.Log("No iMusicActivity updates available.");
                 }
             } catch (Exception e) {
-                logger?.Log($"Could not check for AMWin-RP updates: {e.Message}");
+                logger?.Log($"Could not check for iMusicActivity updates: {e.Message}");
             }
         }
     }

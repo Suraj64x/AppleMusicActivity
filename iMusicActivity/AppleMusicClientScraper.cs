@@ -1,4 +1,4 @@
-﻿using FlaUI.Core.AutomationElements;
+using FlaUI.Core.AutomationElements;
 using FlaUI.UIA3;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace AMWin_RichPresence {
+namespace iMusicActivity {
 
     internal class AppleMusicInfo: IEquatable<AppleMusicInfo> {
         // the following fields are only valid if HasSong is true.
@@ -412,7 +412,7 @@ namespace AMWin_RichPresence {
             // Get lyrics
             // ------------------------------------------------
 
-            if (!currentSong.LyricsSearched && AMWin_RichPresence.Properties.Settings.Default.EnableSyncLyrics) {
+            if (!currentSong.LyricsSearched && iMusicActivity.Properties.Settings.Default.EnableSyncLyrics) {
                 currentSong.LyricsSearched = true;
                 var result = await lrclibClient.GetSyncedLyrics(currentSong.SongName, currentSong.SongArtist, currentSong.SongDuration);
                 if (result != null) {

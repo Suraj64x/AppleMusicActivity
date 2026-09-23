@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace AMWin_RichPresence {
+namespace iMusicActivity {
     internal class LyricResult {
         public List<LyricLine>? Lyrics { get; set; }
         public int? Duration { get; set; }
@@ -186,7 +186,7 @@ namespace AMWin_RichPresence {
                 }
             }
 
-            if (AMWin_RichPresence.Properties.Settings.Default.ExtendLyricsLine && current != null && string.IsNullOrWhiteSpace(current.Text)) {
+            if (iMusicActivity.Properties.Settings.Default.ExtendLyricsLine && current != null && string.IsNullOrWhiteSpace(current.Text)) {
                 return lastNonEmpty?.Text ?? string.Empty;
             }
 
