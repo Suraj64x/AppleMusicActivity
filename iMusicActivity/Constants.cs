@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 
-namespace AMWin_RichPresence {
+namespace iMusicActivity {
     public static class Constants {
         public static string ProgramVersionBase {
             get {
@@ -28,21 +28,21 @@ namespace AMWin_RichPresence {
         public static int    MaxLogFiles                    = 10; // files
         public static int    RefreshPeriod                  = 5; // seconds
         public static int    NumFailedSearchesBeforeAbandon = 5; // attempts
-        public static string ApplicationStylisedName        = "AMWin-RichPresence";
+        public static string ApplicationStylisedName        = "iMusicActivity";
         public static string DiscordClientID                = "1066220978406953012";
         public static string DiscordAppleMusicImageKey      = "applemusic1024x";
         public static string DiscordAppleMusicPlayImageKey  = "applemusicplay1024x";
         public static string DiscordAppleMusicPauseImageKey = "applemusicpause1024x";
         public static string LastFMCredentialTargetName     = "Last FM Password";
         public static int    LastFMTimeBeforeScrobbling     = 20; // seconds
-        public static string GithubReleasesApiUrl           = "https://api.github.com/repos/PKBeam/AMWin-RP/releases/latest";
-        public static string GithubReleasesUrl              = "https://github.com/PKBeam/AMWin-RP/releases";
-        public static string GithubRepoUrl                  = "https://github.com/PKBeam/AMWin-RP/";
+        public static string GithubReleasesApiUrl           = "https://api.github.com/repos/Suraj64x/AppleMusicActivity/releases/latest";
+        public static string GithubReleasesUrl              = "https://github.com/Suraj64x/AppleMusicActivity/releases";
+        public static string GithubRepoUrl                  = "https://github.com/Suraj64x/AppleMusicActivity/";
         public static string DefaultAppleMusicRegion        = "US";
         public static string WindowsStartupFolder => Environment.GetFolderPath(Environment.SpecialFolder.Startup);
         public static string WindowsAppDataFolder => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
         public static string AppDataFolder => Path.Combine(WindowsAppDataFolder, ApplicationStylisedName);
-        public static string AppShortcutPath => Path.Join(WindowsStartupFolder, "AMWin-RP.lnk");
+        public static string AppShortcutPath => Path.Join(WindowsStartupFolder, "iMusicActivity.lnk");
         public static string? ExePath => Process.GetCurrentProcess().MainModule?.FileName;
 
         public static readonly HttpClient HttpClient = new();
