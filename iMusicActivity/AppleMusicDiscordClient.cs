@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-using AMWin_RichPresence;
+using iMusicActivity;
 using DiscordRPC;
-using Localisation = AMWin_RichPresence.Properties.Localisation;
+using Localisation = iMusicActivity.Properties.Localisation;
 
 internal class AppleMusicDiscordClient {
     public enum RPStatusDisplayOptions {
@@ -95,7 +95,7 @@ internal class AppleMusicDiscordClient {
             songArtist = songArtist.Substring(0, 60) + "...";
         }
         // update lyrics
-        if (AMWin_RichPresence.Properties.Settings.Default.EnableSyncLyrics && amInfo.SyncedLyrics != null) {
+        if (iMusicActivity.Properties.Settings.Default.EnableSyncLyrics && amInfo.SyncedLyrics != null) {
             var currentTime = amInfo.CurrentTime != null ? TimeSpan.FromSeconds((int)amInfo.CurrentTime) : (DateTime.UtcNow - (amInfo.PlaybackStart ?? DateTime.UtcNow));
             songLyrics = LRCLibClient.GetCurrentLyric(amInfo.SyncedLyrics, currentTime);
         } else {

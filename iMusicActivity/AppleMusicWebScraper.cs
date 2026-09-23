@@ -1,4 +1,4 @@
-﻿using HtmlAgilityPack;
+using HtmlAgilityPack;
 using System.Linq;
 using System.Net.Http;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Diagnostics;
 using System;
 using System.Drawing;
 
-namespace AMWin_RichPresence {
+namespace iMusicActivity {
     internal class AppleMusicWebScraper
     {
         private static readonly Regex DurationRegex = new Regex(@"(\d{1,3}:\d{2})", RegexOptions.Compiled);

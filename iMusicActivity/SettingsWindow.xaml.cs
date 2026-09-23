@@ -10,11 +10,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
-using Localisation = AMWin_RichPresence.Properties.Localisation;
+using Localisation = iMusicActivity.Properties.Localisation;
 using MessageBox = Wpf.Ui.Controls.MessageBox;
 using MessageBoxResult = Wpf.Ui.Controls.MessageBoxResult;
 
-namespace AMWin_RichPresence {
+namespace iMusicActivity {
     /// <summary>
     /// Interaction logic for SettingsWindow.xaml
     /// </summary>
