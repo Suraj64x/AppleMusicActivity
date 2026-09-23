@@ -2,15 +2,15 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:tb="http://www.hardcodet.net/taskbar"
                     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-                    xmlns:properties="clr-namespace:AMWin_RichPresence.Properties"
-                    x:Class="AMWin_RichPresence.Taskbar">
+                    xmlns:properties="clr-namespace:iMusicActivity.Properties"
+                    x:Class="iMusicActivity.Taskbar">
 
-    <tb:TaskbarIcon x:Key="TaskbarIcon" IconSource="/Resources/AMWinRP.ico" TrayMouseDoubleClick="TaskbarIcon_DoubleClick" ToolTipText="AMWin-RP">
+    <tb:TaskbarIcon x:Key="TaskbarIcon" IconSource="/Resources/iMusicActivity.ico" TrayMouseDoubleClick="TaskbarIcon_DoubleClick" ToolTipText="iMusicActivity">
         <tb:TaskbarIcon.ContextMenu>
             <ContextMenu UseLayoutRounding="True">
-                <ui:MenuItem Header="AMWin-RP" FontWeight="SemiBold" IsEnabled="False" StaysOpenOnClick="True">
+                <ui:MenuItem Header="iMusicActivity" FontWeight="SemiBold" IsEnabled="False" StaysOpenOnClick="True">
                     <ui:MenuItem.Icon>
-                        <ui:ImageIcon Width="20" Height="20" Margin="0 0 3 0" Source="/Resources/AMWinRP.ico" />
+                        <ui:ImageIcon Width="20" Height="20" Margin="0 0 3 0" Source="/Resources/iMusicActivity.ico" />
                     </ui:MenuItem.Icon>
                 </ui:MenuItem>
                 <Separator />
