@@ -1,59 +1,182 @@
-# AMWin-RP 
-![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/downloads-pre/PKBeam/AMWin-RP/total) ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/downloads-pre/PKBeam/AMWin-RP/latest/total) &nbsp; ([한국어](README-KO.md) | [日本語](README-JA.md) | [Russian](README-RU.md) | [Español de Latinoamérica](README-ES_419.md) | [Español de España](README-ES.md) | [Deutsch](README-DE.md))
+<div align="center">
+  <img src="assets/icon.png" width="148" alt="iMusicActivity" />
 
-A Discord Rich Presence client for Apple Music's native Windows app.  
-Also includes scrobbling for Last.FM and ListenBrainz.
+  <h1>iMusicActivity</h1>
 
-<image width=450 src="https://github.com/user-attachments/assets/df5d6a83-4630-4384-b521-bc80c286a499" />
-&nbsp; &nbsp; 
-<image src=https://github.com/user-attachments/assets/ea63ddf1-d822-4ffd-be9d-24e13701fce9 width=300 />
+  <p>
+    <strong>Apple Music on Windows, finally visible.</strong><br/>
+    Discord sees the track. Last.fm gets the scrobble. You stay in the tray.
+  </p>
 
-## Installation
-AMWin-RP requires Windows 11 24H2 or later.
+  <p>
+    <a href="https://github.com/Suraj64x/AppleMusicActivity/raw/master/iMusicActivity.exe"><img src="https://img.shields.io/badge/Download-Windows%20exe-FA2D48?style=for-the-badge&logo=windows&logoColor=white" alt="Download" /></a>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPL%203.0-111111?style=for-the-badge" alt="GPL-3.0" /></a>
+    <a href="https://dotnet.microsoft.com/download/dotnet/10.0"><img src="https://img.shields.io/badge/.NET-10-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET 10" /></a>
+    <a href="https://apps.microsoft.com/detail/9PFHDD62MXS1"><img src="https://img.shields.io/badge/Requires-Apple%20Music-FA2D48?style=for-the-badge&logo=applemusic&logoColor=white" alt="Apple Music" /></a>
+  </p>
 
-Builds can be found [here](https://github.com/PKBeam/AMWin-RP/releases).  
+  <p>
+    <code>Windows 11 24H2+</code>
+    &nbsp;·&nbsp;
+    <a href="https://github.com/Suraj64x/AppleMusicActivity/raw/master/iMusicActivity.exe">iMusicActivity.exe</a>
+    &nbsp;·&nbsp;
+    <a href="https://github.com/Suraj64x/AppleMusicActivity/issues">Issues</a>
+  </p>
+</div>
 
-### Which release do I use?
-Pick x64 or ARM64 based on what processor your PC has. (If you have an Intel or AMD CPU, pick the x64 release.)  
+---
 
-Then there are two files to choose from: the standard one and one marked as `NoRuntime`.
+<table>
+  <tr>
+    <td width="38%" valign="top">
 
-If in doubt, use the unlabelled release (i.e. the one without `NoRuntime`).  
-This version works universally, but is larger in size because it bundles the components of .NET that are needed for the app to run.
+### Now playing
 
-The `NoRuntime` release is much smaller, but requires you to have the [.NET 10 desktop runtime](https://dotnet.microsoft.com/en-us/download/dotnet/10.0) installed.  
-If you don't have this runtime installed, the app will prompt you to do it when it opens.
+```
+┌─────────────────────────┐
+│  ●  Discord             │
+│                         │
+│  Listening to Apple Music
+│  After Hours            │
+│  The Weeknd             │
+│  ━━━━●────────  1:42    │
+└─────────────────────────┘
+```
 
-## Usage
-You need the [Microsoft store version](https://apps.microsoft.com/detail/9PFHDD62MXS1) of Apple Music to use AMWin-RP.  
+Your friends stop asking what song that is.
 
-- Open the .exe to start the app.
-- AMWin-RP runs in the background, minimised to the system tray.  
-- Double clicking on the tray icon brings up the settings window.
-  - From here you can adjust individual settings such as run on startup, scrobbling and song detection.  
-- The app can be closed by right-clicking on the tray icon and selecting "Exit".  
-- By default, the Apple Music app must be open and currently playing music (i.e. not paused) in order for Rich Presence to show.
+    </td>
+    <td width="62%" valign="top">
 
-**Note**: If you use virtual desktops, AMWin-RP and Apple Music must be in the same desktop.  
-This is a technical limitation of the UI Automation library used to scrape the Apple Music client app.
+### The idea
+
+The Windows Apple Music app does not talk to Discord. iMusicActivity is the missing wire: a quiet tray process that reads the player, then publishes a full Rich Presence — artwork, timestamps, play and pause, optional lyrics.
+
+Same process can scrobble to **Last.fm** and **ListenBrainz**. One install. No extra windows until you want settings.
+
+    </td>
+  </tr>
+</table>
+
+```mermaid
+flowchart LR
+  subgraph desk [Your PC]
+    A[Apple Music]
+    B[iMusicActivity]
+  end
+  A -->|UI Automation| B
+  B --> C[Discord]
+  B --> D[Last.fm]
+  B --> E[ListenBrainz]
+```
+
+---
+
+## Features
+
+<table>
+  <tr>
+    <td width="33%" valign="top">
+
+**Presence**<br/>
+Song, artist, album, cover, elapsed time. Show it only while playing, or keep it up when paused.
+
+    </td>
+    <td width="33%" valign="top">
+
+**Lyrics**<br/>
+Experimental synced lines on your Discord status. Cache them, clear them, forget they exist.
+
+    </td>
+    <td width="33%" valign="top">
+
+**Scrobbles**<br/>
+Last.fm and ListenBrainz from the same tray icon. Password stays in Windows Credential Manager.
+
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+
+**Languages**<br/>
+English, Deutsch, Türkçe, 한국어, 日本語, Русский, Español.
+
+    </td>
+    <td valign="top">
+
+**Classical mode**<br/>
+Composer as artist when the performer is not the point.
+
+    </td>
+    <td valign="top">
+
+**Ghost-quiet**<br/>
+Starts with Windows if you want. Lives in the tray. Right-click, Exit.
+
+    </td>
+  </tr>
+</table>
+
+---
+
+## Install in one click
+
+<p align="center">
+  <a href="./iMusicActivity.exe"><img src="https://img.shields.io/badge/⬇%20%20GET%20iMusicActivity.exe-FA2D48?style=for-the-badge" alt="Get the exe" /></a>
+</p>
+
+1. Download [`iMusicActivity.exe`](https://github.com/Suraj64x/AppleMusicActivity/raw/master/iMusicActivity.exe) from this repo.
+2. Install [Apple Music from the Microsoft Store](https://apps.microsoft.com/detail/9PFHDD62MXS1) if you do not have it.
+3. If Windows asks, install the [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/10.0).
+4. Double-click the exe. Look for the icon in the system tray.
+
+Discord: **Settings → Activity Settings → Activity Privacy → Activity Status** must be on.
+
+> Virtual desktops: keep iMusicActivity and Apple Music on the **same** desktop. That is a platform limit, not a bug.
+
+---
 
 ## Scrobbling
-The scrobbler implementation does not support offline Scrobbles, which means any songs you listen to while not connected to the internet will be lost.
 
-### Last.FM
-You will need your own API Key and API Secret from Last.FM.  
-To generate one, go to https://www.last.fm/api and select "Get an API Account."  
-Enter these in the settings menu with your Last.FM username and password.
+Offline listens are discarded. Finish a song with no network and it never happened — to Last.fm, anyway.
 
-The Last.FM password is stored in [Windows Credentials Manager](https://support.microsoft.com/en-us/windows/accessing-credential-manager-1b5c916a-6a16-889f-8581-fc16e8165ac0) under your local Windows account.
+| Service | What you paste |
+| --- | --- |
+| **Last.fm** | API key + secret from [last.fm/api](https://www.last.fm/api), plus username and password |
+| **ListenBrainz** | User token |
 
-### ListenBrainz 
-You can scrobble to ListenBrainz by adding your user token in the settings.
+Last.fm passwords are stored in [Windows Credential Manager](https://support.microsoft.com/en-us/windows/accessing-credential-manager-1b5c916a-6a16-889f-8581-fc16e8165ac0), not a plaintext file.
 
-## Reporting Bugs
-Before creating a new issue, please make sure your problem does not fall under an existing issue.  
-If you are reporting a problem, please attach any relevant `.log` files (found in `%localappdata%\AMWin-RichPresence`).
+---
 
-Before posting, please double-check the following:
-- The problem isn't already covered by an existing open or closed issue.
-- You have RP display enabled in Discord (Settings > Activity Settings > Activity Privacy > Activity Status).
+## Build it yourself
+
+```bat
+dotnet publish iMusicActivity/iMusicActivity.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true
+```
+
+The finished exe lands in the repo root.
+
+Need the SDK? [.NET 10](https://dotnet.microsoft.com/download/dotnet/10.0). Open `iMusicActivity.sln` in Visual Studio if you would rather click than type.
+
+---
+
+## When it breaks
+
+Logs live in `%localappdata%\iMusicActivity`. Attach them to an [issue](https://github.com/Suraj64x/AppleMusicActivity/issues).
+
+Check first: Discord activity is enabled, Apple Music is the Store app, both windows share a desktop.
+
+---
+
+<div align="center">
+
+**Made with love by SMOKiE**
+
+GPL-3.0 · Includes work from [AMWin-RP](https://github.com/PKBeam/AMWin-RP) by [PKBeam](https://github.com/PKBeam)
+
+<br/>
+
+*Press play. Let Discord keep up.*
+
+</div>
