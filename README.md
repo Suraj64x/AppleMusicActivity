@@ -8,6 +8,10 @@ Apple Music on Windows, live on Discord.
 
 <br>
 
+<img src="assets/hero.svg" width="640" alt="">
+
+<br><br>
+
 <a href="https://github.com/Suraj64x/AppleMusicActivity/releases/download/v1.4.0/iMusicActivity.exe">
   <img src="https://img.shields.io/badge/Download-v1.4.0-FA2D48?style=for-the-badge&logo=windows&logoColor=white" alt="Download v1.4.0">
 </a>
@@ -23,59 +27,97 @@ Apple Music on Windows, live on Discord.
 <img src="https://img.shields.io/badge/Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord">
 <img src="https://img.shields.io/badge/GPL--3.0-2B2D31?style=flat" alt="GPL-3.0">
 
+<br><br>
+<img src="assets/dots.svg" width="70" alt="">
+
+<br><br>
+
+<table>
+  <tr>
+    <td align="center" width="200">
+      <img src="assets/apple-sing.svg" width="56" alt=""><br>
+      <b>Presence</b><br>
+      <sub>Song, artist, album, art, time</sub>
+    </td>
+    <td align="center" width="200">
+      <img src="assets/apple-wink.svg" width="56" alt=""><br>
+      <b>Scrobble</b><br>
+      <sub>Last.fm and ListenBrainz</sub>
+    </td>
+    <td align="center" width="200">
+      <img src="assets/apple-sleep.svg" width="56" alt=""><br>
+      <b>Quiet</b><br>
+      <sub>Lives in the tray</sub>
+    </td>
+  </tr>
+</table>
+
+<br>
+
+Play Apple Music. Discord shows it.<br>
+Optional lyrics. Optional scrobbles. One tray icon.
+
 </div>
 
----
+<br>
 
-<div align="center">
+## <img src="assets/faces/sunny.svg" width="28" align="top" alt=""> Install
 
-| Presence | Scrobble | Quiet |
-| :---: | :---: | :---: |
-| Song, artist, album, art, time | Last.fm and ListenBrainz | Lives in the tray |
+<img src="assets/faces/mint.svg" width="18" align="top" alt=""> &nbsp;[Download v1.4.0](https://github.com/Suraj64x/AppleMusicActivity/releases/download/v1.4.0/iMusicActivity.exe)<br>
+<img src="assets/faces/fresh.svg" width="18" align="top" alt=""> &nbsp;Use [Apple Music from the Store](https://apps.microsoft.com/detail/9PFHDD62MXS1)<br>
+<img src="assets/faces/dusk.svg" width="18" align="top" alt=""> &nbsp;Install [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/10.0) if Windows asks<br>
+<img src="assets/faces/peach.svg" width="18" align="top" alt=""> &nbsp;Run the exe, then turn on Discord **Activity Status**
 
-</div>
-
-Play Apple Music. Discord shows it. Optional lyrics. Optional scrobbles. One tray icon.
-
----
-
-## Install
-
-1. [Download v1.4.0](https://github.com/Suraj64x/AppleMusicActivity/releases/download/v1.4.0/iMusicActivity.exe)
-2. Use [Apple Music from the Store](https://apps.microsoft.com/detail/9PFHDD62MXS1)
-3. Install [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/10.0) if Windows asks
-4. Run the exe · enable Discord **Activity Status**
-
+> [!TIP]
 > Keep Apple Music and iMusicActivity on the same virtual desktop.
 
----
+<br>
 
-## Setup
+## <img src="assets/faces/fresh.svg" width="28" align="top" alt=""> Setup
 
 Double-click the tray icon.
 
-| Last.fm | ListenBrainz |
-| :---: | :---: |
-| API key, secret, username, password | User token |
+<table>
+  <tr>
+    <td align="center" width="300">
+      <b>Last.fm</b><br>
+      <sub>API key, secret, username, password</sub>
+    </td>
+    <td align="center" width="300">
+      <b>ListenBrainz</b><br>
+      <sub>User token</sub>
+    </td>
+  </tr>
+</table>
 
-Passwords go in Windows Credential Manager. Offline listens are not saved.
+<img src="assets/faces/sleep.svg" width="18" align="top" alt=""> &nbsp;Passwords live in Windows Credential Manager. Offline listens are not saved.
 
----
+<br>
 
-## Build
+## <img src="assets/faces/dusk.svg" width="28" align="top" alt=""> Build
 
 ```bat
 dotnet publish iMusicActivity/iMusicActivity.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true
 ```
 
-Logs: `%localappdata%\iMusicActivity` · [Issues](https://github.com/Suraj64x/AppleMusicActivity/issues)
+Logs live in `%localappdata%\iMusicActivity`. Something off? [Open an issue](https://github.com/Suraj64x/AppleMusicActivity/issues).
 
----
+<br>
 
 <div align="center">
 
+<img src="assets/faces/sunny.svg" width="22" alt="">
+<img src="assets/faces/fresh.svg" width="22" alt="">
+<img src="assets/faces/blush.svg" width="22" alt="">
+<img src="assets/apple.svg" width="30" alt="">
+<img src="assets/faces/dusk.svg" width="22" alt="">
+<img src="assets/faces/peach.svg" width="22" alt="">
+<img src="assets/faces/mint.svg" width="22" alt="">
+
+<br><br>
+
 **Made with love by SMOKiE**
 
-[GPL-3.0](LICENSE) · includes [AMWin-RP](https://github.com/PKBeam/AMWin-RP) by [PKBeam](https://github.com/PKBeam)
+<sub>[GPL-3.0](LICENSE) &nbsp;·&nbsp; includes [AMWin-RP](https://github.com/PKBeam/AMWin-RP) by [PKBeam](https://github.com/PKBeam)</sub>
 
 </div>
