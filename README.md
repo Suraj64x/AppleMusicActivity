@@ -1,182 +1,352 @@
 <div align="center">
-  <img src="assets/icon.png" width="148" alt="iMusicActivity" />
 
-  <h1>iMusicActivity</h1>
+<img src="assets/icon.png" width="140" alt="iMusicActivity">
 
-  <p>
-    <strong>Apple Music on Windows, finally visible.</strong><br/>
-    Discord sees the track. Last.fm gets the scrobble. You stay in the tray.
-  </p>
+# iMusicActivity
 
-  <p>
-    <a href="https://github.com/Suraj64x/AppleMusicActivity/raw/master/iMusicActivity.exe"><img src="https://img.shields.io/badge/Download-Windows%20exe-FA2D48?style=for-the-badge&logo=windows&logoColor=white" alt="Download" /></a>
-    <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPL%203.0-111111?style=for-the-badge" alt="GPL-3.0" /></a>
-    <a href="https://dotnet.microsoft.com/download/dotnet/10.0"><img src="https://img.shields.io/badge/.NET-10-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET 10" /></a>
-    <a href="https://apps.microsoft.com/detail/9PFHDD62MXS1"><img src="https://img.shields.io/badge/Requires-Apple%20Music-FA2D48?style=for-the-badge&logo=applemusic&logoColor=white" alt="Apple Music" /></a>
-  </p>
+### Apple Music → Discord, beautifully.
 
-  <p>
-    <code>Windows 11 24H2+</code>
-    &nbsp;·&nbsp;
-    <a href="https://github.com/Suraj64x/AppleMusicActivity/raw/master/iMusicActivity.exe">iMusicActivity.exe</a>
-    &nbsp;·&nbsp;
-    <a href="https://github.com/Suraj64x/AppleMusicActivity/issues">Issues</a>
-  </p>
+Bring your Apple Music listening activity to Discord with artwork, timestamps, playback state and optional lyrics — while staying quietly in the system tray.
+
+<br>
+
+<a href="https://github.com/Suraj64x/AppleMusicActivity/raw/master/iMusicActivity.exe">
+  <img src="https://img.shields.io/badge/Download%20for%20Windows-FA2D48?style=for-the-badge&logo=windows&logoColor=white" alt="Download">
+</a>
+&nbsp;
+<a href="LICENSE">
+  <img src="https://img.shields.io/badge/License-GPL--3.0-111111?style=for-the-badge" alt="GPL-3.0">
+</a>
+&nbsp;
+<a href="https://dotnet.microsoft.com/download/dotnet/10.0">
+  <img src="https://img.shields.io/badge/.NET%2010-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET 10">
+</a>
+
+<br><br>
+
+<img src="https://img.shields.io/badge/Windows%2011%2024H2%2B-0078D4?style=flat-square&logo=windows&logoColor=white" alt="Windows 11">
+<img src="https://img.shields.io/badge/Apple%20Music-FA2D48?style=flat-square&logo=applemusic&logoColor=white" alt="Apple Music">
+<img src="https://img.shields.io/badge/Discord-5865F2?style=flat-square&logo=discord&logoColor=white" alt="Discord">
+
+<br><br>
+
+<a href="https://github.com/Suraj64x/AppleMusicActivity/issues">Issues</a>
+&nbsp;·&nbsp;
+<a href="https://apps.microsoft.com/detail/9PFHDD62MXS1">Apple Music</a>
+&nbsp;·&nbsp;
+<a href="https://github.com/Suraj64x/AppleMusicActivity/raw/master/iMusicActivity.exe">iMusicActivity.exe</a>
+
 </div>
-
----
-
-<table>
-  <tr>
-    <td width="38%" valign="top">
-
-### Now playing
-
-```
-┌─────────────────────────┐
-│  ●  Discord             │
-│                         │
-│  Listening to Apple Music
-│  After Hours            │
-│  The Weeknd             │
-│  ━━━━●────────  1:42    │
-└─────────────────────────┘
-```
-
-Your friends stop asking what song that is.
-
-    </td>
-    <td width="62%" valign="top">
-
-### The idea
-
-The Windows Apple Music app does not talk to Discord. iMusicActivity is the missing wire: a quiet tray process that reads the player, then publishes a full Rich Presence — artwork, timestamps, play and pause, optional lyrics.
-
-Same process can scrobble to **Last.fm** and **ListenBrainz**. One install. No extra windows until you want settings.
-
-    </td>
-  </tr>
-</table>
-
-```mermaid
-flowchart LR
-  subgraph desk [Your PC]
-    A[Apple Music]
-    B[iMusicActivity]
-  end
-  A -->|UI Automation| B
-  B --> C[Discord]
-  B --> D[Last.fm]
-  B --> E[ListenBrainz]
-```
-
----
-
-## Features
-
-<table>
-  <tr>
-    <td width="33%" valign="top">
-
-**Presence**<br/>
-Song, artist, album, cover, elapsed time. Show it only while playing, or keep it up when paused.
-
-    </td>
-    <td width="33%" valign="top">
-
-**Lyrics**<br/>
-Experimental synced lines on your Discord status. Cache them, clear them, forget they exist.
-
-    </td>
-    <td width="33%" valign="top">
-
-**Scrobbles**<br/>
-Last.fm and ListenBrainz from the same tray icon. Password stays in Windows Credential Manager.
-
-    </td>
-  </tr>
-  <tr>
-    <td valign="top">
-
-**Languages**<br/>
-English, Deutsch, Türkçe, 한국어, 日本語, Русский, Español.
-
-    </td>
-    <td valign="top">
-
-**Classical mode**<br/>
-Composer as artist when the performer is not the point.
-
-    </td>
-    <td valign="top">
-
-**Ghost-quiet**<br/>
-Starts with Windows if you want. Lives in the tray. Right-click, Exit.
-
-    </td>
-  </tr>
-</table>
-
----
-
-## Install in one click
-
-<p align="center">
-  <a href="./iMusicActivity.exe"><img src="https://img.shields.io/badge/⬇%20%20GET%20iMusicActivity.exe-FA2D48?style=for-the-badge" alt="Get the exe" /></a>
-</p>
-
-1. Download [`iMusicActivity.exe`](https://github.com/Suraj64x/AppleMusicActivity/raw/master/iMusicActivity.exe) from this repo.
-2. Install [Apple Music from the Microsoft Store](https://apps.microsoft.com/detail/9PFHDD62MXS1) if you do not have it.
-3. If Windows asks, install the [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/10.0).
-4. Double-click the exe. Look for the icon in the system tray.
-
-Discord: **Settings → Activity Settings → Activity Privacy → Activity Status** must be on.
-
-> Virtual desktops: keep iMusicActivity and Apple Music on the **same** desktop. That is a platform limit, not a bug.
-
----
-
-## Scrobbling
-
-Offline listens are discarded. Finish a song with no network and it never happened — to Last.fm, anyway.
-
-| Service | What you paste |
-| --- | --- |
-| **Last.fm** | API key + secret from [last.fm/api](https://www.last.fm/api), plus username and password |
-| **ListenBrainz** | User token |
-
-Last.fm passwords are stored in [Windows Credential Manager](https://support.microsoft.com/en-us/windows/accessing-credential-manager-1b5c916a-6a16-889f-8581-fc16e8165ac0), not a plaintext file.
-
----
-
-## Build it yourself
-
-```bat
-dotnet publish iMusicActivity/iMusicActivity.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true
-```
-
-The finished exe lands in the repo root.
-
-Need the SDK? [.NET 10](https://dotnet.microsoft.com/download/dotnet/10.0). Open `iMusicActivity.sln` in Visual Studio if you would rather click than type.
-
----
-
-## When it breaks
-
-Logs live in `%localappdata%\iMusicActivity`. Attach them to an [issue](https://github.com/Suraj64x/AppleMusicActivity/issues).
-
-Check first: Discord activity is enabled, Apple Music is the Store app, both windows share a desktop.
 
 ---
 
 <div align="center">
 
-**Made with love by SMOKiE**
+## ♪ Your music, finally visible.
 
-GPL-3.0 · Includes work from [AMWin-RP](https://github.com/PKBeam/AMWin-RP) by [PKBeam](https://github.com/PKBeam)
+**Play a song in Apple Music. Discord keeps up.**
 
-<br/>
+</div>
 
-*Press play. Let Discord keep up.*
+---
+
+## ✦ What is iMusicActivity?
+
+The Apple Music app on Windows doesn't natively publish your listening activity to Discord.
+
+**iMusicActivity is the missing link.**
+
+It runs quietly in the background, reads Apple Music's current playback state through Windows UI Automation, and turns it into a full Discord Rich Presence.
+
+The same process can also send your listening history to **Last.fm** and **ListenBrainz**.
+
+```text
+                 ┌─────────────────┐
+                 │   Apple Music   │
+                 └────────┬────────┘
+                          │
+                    UI Automation
+                          │
+                          ▼
+                 ┌─────────────────┐
+                 │ iMusicActivity  │
+                 └───────┬─────────┘
+                         │
+              ┌──────────┼──────────┐
+              ▼          ▼          ▼
+           Discord     Last.fm   ListenBrainz
+```
+
+One app.  
+One tray icon.  
+No unnecessary windows.
+
+---
+
+## ◉ Features
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### 🎧 Discord Rich Presence
+
+Show:
+
+- Song
+- Artist
+- Album
+- Artwork
+- Elapsed time
+- Playback state
+
+Keep your activity visible while playing, or optionally while paused.
+
+</td>
+
+<td width="50%" valign="top">
+
+### ♫ Experimental Lyrics
+
+Display synced lyrics through your Discord activity.
+
+Lyrics can be cached, cleared, or disabled from settings.
+
+</td>
+</tr>
+
+<tr>
+<td width="50%" valign="top">
+
+### ◌ Scrobbling
+
+Send your listening history to:
+
+**Last.fm**  
+**ListenBrainz**
+
+Last.fm passwords are stored using **Windows Credential Manager**.
+
+</td>
+
+<td width="50%" valign="top">
+
+### ◈ Quiet by Design
+
+iMusicActivity lives in the Windows system tray.
+
+Start it with Windows if you want.
+
+Right-click the tray icon when you need it.  
+Otherwise, it stays out of your way.
+
+</td>
+</tr>
+
+<tr>
+<td width="50%" valign="top">
+
+### 文 Multiple Languages
+
+Available in:
+
+`English` · `Deutsch` · `Türkçe`  
+`한국어` · `日本語` · `Русский` · `Español`
+
+</td>
+
+<td width="50%" valign="top">
+
+### ♮ Classical Mode
+
+For classical music, use the **composer as the displayed artist** when the performer isn't the main focus.
+
+</td>
+</tr>
+</table>
+
+---
+
+## ⚡ Install
+
+### Requirements
+
+```text
+Windows 11 24H2+
+Apple Music — Microsoft Store version
+.NET 10 Desktop Runtime
+```
+
+### 1 · Download
+
+<a href="https://github.com/Suraj64x/AppleMusicActivity/raw/master/iMusicActivity.exe">
+<b>→ Download iMusicActivity.exe</b>
+</a>
+
+### 2 · Install Apple Music
+
+<a href="https://apps.microsoft.com/detail/9PFHDD62MXS1">
+<b>→ Get Apple Music from the Microsoft Store</b>
+</a>
+
+### 3 · Install .NET
+
+If Windows asks for it, install the:
+
+<a href="https://dotnet.microsoft.com/download/dotnet/10.0">
+<b>.NET 10 Desktop Runtime</b>
+</a>
+
+### 4 · Launch
+
+Run:
+
+```text
+iMusicActivity.exe
+```
+
+Look for iMusicActivity in the **Windows system tray**.
+
+### 5 · Enable Discord Activity
+
+In Discord:
+
+```text
+Settings
+→ Activity Settings
+→ Activity Privacy
+→ Activity Status
+→ ON
+```
+
+That's it.
+
+> **Virtual desktops:** Apple Music and iMusicActivity need to be on the **same virtual desktop**. This is a Windows platform limitation.
+
+---
+
+## ♫ Scrobbling
+
+Connect iMusicActivity to your preferred music-tracking service.
+
+| Service | Required |
+|---|---|
+| **Last.fm** | API key · API secret · Username · Password |
+| **ListenBrainz** | User token |
+
+Last.fm passwords are stored in **Windows Credential Manager**, not a plaintext file.
+
+<sub>Offline listens are discarded and are not submitted later.</sub>
+
+---
+
+## ⚙ Settings
+
+Everything important stays behind the tray icon.
+
+```text
+iMusicActivity
+│
+├── Discord Presence
+├── Lyrics
+├── Last.fm
+├── ListenBrainz
+├── Classical Mode
+├── Language
+├── Start with Windows
+└── Exit
+```
+
+Configure it once.
+
+Then let it disappear.
+
+---
+
+## 🛠 Build from Source
+
+Clone the repository:
+
+```bash
+git clone https://github.com/Suraj64x/AppleMusicActivity.git
+cd AppleMusicActivity
+```
+
+Publish the application:
+
+```bat
+dotnet publish iMusicActivity/iMusicActivity.csproj ^
+  -c Release ^
+  -r win-x64 ^
+  --self-contained false ^
+  -p:PublishSingleFile=true
+```
+
+The finished executable will be placed in the repository root.
+
+### Development
+
+Open:
+
+```text
+iMusicActivity.sln
+```
+
+with Visual Studio.
+
+Need the SDK?
+
+<a href="https://dotnet.microsoft.com/download/dotnet/10.0">
+<b>.NET 10</b>
+</a>
+
+---
+
+## 🧩 Troubleshooting
+
+### Discord isn't showing my music
+
+Check:
+
+```text
+✓ Discord Activity Status is enabled
+✓ Apple Music is the Microsoft Store version
+✓ iMusicActivity is running
+✓ Both apps are on the same virtual desktop
+```
+
+### Need logs?
+
+Logs are stored here:
+
+```text
+%localappdata%\iMusicActivity
+```
+
+Attach the relevant logs when opening an issue.
+
+<a href="https://github.com/Suraj64x/AppleMusicActivity/issues">
+<b>→ Open an issue</b>
+</a>
+
+---
+
+## ♥ Credits
+
+<div align="center">
+
+Made with love by **SMOKiE**
+
+GPL-3.0
+
+Includes work from  
+<a href="https://github.com/PKBeam/AMWin-RP">AMWin-RP</a> by
+<a href="https://github.com/PKBeam">PKBeam</a>.
+
+<br><br>
+
+### Press play. Let Discord keep up.
+
+<sub>iMusicActivity · Apple Music for Windows · Discord Rich Presence</sub>
 
 </div>
