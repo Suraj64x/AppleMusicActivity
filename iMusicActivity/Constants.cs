@@ -5,25 +5,12 @@ using System.Net.Http;
 
 namespace iMusicActivity {
     public static class Constants {
-        public static string ProgramVersionBase {
-            get {
-                try {
-                    var exePath = Process.GetCurrentProcess().MainModule?.FileName;
-                    if (exePath == null) {
-                        return "";
-                    }
-                    FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(exePath);
-                    return $"v{fvi.FileVersion}";
-                } catch (Exception ex) {
-                    new Logger().Log($"Error getting version string: {ex}");
-                    return "";
-                }
-            }
-        } 
-#if RELEASE
-        public static string  ProgramVersion = ProgramVersionBase;
+        public const string AppVersion = "2.4.0";
+        public static string ProgramVersionBase => $"v{AppVersion}"; 
+#if DEBUG
+        public static string ProgramVersion = $"{ProgramVersionBase}-dev";
 #else
-        public static string  ProgramVersion = $"{ProgramVersionBase}-dev";
+        public static string ProgramVersion = ProgramVersionBase;
 #endif                        
         public static int    MaxLogFiles                    = 10; // files
         public static int    RefreshPeriod                  = 5; // seconds
