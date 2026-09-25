@@ -3,12 +3,13 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
-    <RootNamespace>AMWin_RichPresence</RootNamespace>
+    <RootNamespace>iMusicActivity</RootNamespace>
+    <AssemblyName>iMusicActivity</AssemblyName>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>Resources\AMWinRP.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\iMusicActivity.ico</ApplicationIcon>
     <AssemblyVersion>1.0</AssemblyVersion>
-    <FileVersion>1.6.2</FileVersion>
+    <FileVersion>1.0.0</FileVersion>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
     <SupportedOSPlatformVersion>10.0.26100.0</SupportedOSPlatformVersion>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -16,8 +17,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\AMWinRP-128x.png" />
-    <None Remove="Resources\AMWinRP.ico" />
+    <None Remove="Resources\iMusicActivity-128x.png" />
+    <None Remove="Resources\iMusicActivity.ico" />
     <None Remove="Resources\GitHub_Invertocat_Black.png" />
     <None Remove="Resources\GitHub_Invertocat_White.png" />
   </ItemGroup>
@@ -38,8 +39,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\AMWinRP-128x.png" />
-    <Resource Include="Resources\AMWinRP.ico" />
+    <Resource Include="Resources\iMusicActivity-128x.png" />
+    <Resource Include="Resources\iMusicActivity.ico" />
     <Resource Include="Resources\GitHub_Invertocat_Black.png" />
   </ItemGroup>
 
@@ -78,5 +79,12 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+
+  <Target Name="CopyExeToRepoRoot" AfterTargets="Build">
+    <Copy SourceFiles="$(TargetDir)$(AssemblyName).exe" DestinationFolder="$(MSBuildThisFileDirectory).." Condition="Exists('$(TargetDir)$(AssemblyName).exe')" />
+  </Target>
+  <Target Name="CopyPublishedExeToRepoRoot" AfterTargets="Publish">
+    <Copy SourceFiles="$(PublishDir)$(AssemblyName).exe" DestinationFolder="$(MSBuildThisFileDirectory).." Condition="Exists('$(PublishDir)$(AssemblyName).exe')" />
+  </Target>
 
 </Project>
