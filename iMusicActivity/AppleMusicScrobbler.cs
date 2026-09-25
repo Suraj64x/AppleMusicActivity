@@ -1,4 +1,4 @@
-﻿using IF.Lastfm.Core.Api;
+using IF.Lastfm.Core.Api;
 using IF.Lastfm.Core.Objects;
 using IF.Lastfm.Core.Scrobblers;
 using MetaBrainz.ListenBrainz;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace AMWin_RichPresence {
+namespace iMusicActivity {
     internal interface IScrobblerCredentials { }
 
     public struct LastFmCredentials : IScrobblerCredentials {

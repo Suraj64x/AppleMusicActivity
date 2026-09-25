@@ -1,11 +1,11 @@
-﻿using DiscordRPC.Logging;
+using DiscordRPC.Logging;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
 
-namespace AMWin_RichPresence {
+namespace iMusicActivity {
     internal class Logger : ILogger {
 
         string? logFile;

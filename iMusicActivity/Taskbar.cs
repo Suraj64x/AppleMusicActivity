@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Windows;
 
-namespace AMWin_RichPresence {
+namespace iMusicActivity {
     public partial class Taskbar {
 
         private SettingsWindow? settingsWindow;
