@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -271,7 +271,7 @@
     <value>Nueva actualización disponible</value>
   </data>
   <data name="Message_AppUpdate" xml:space="preserve">
-    <value>Ya está disponible una nueva actualización de AMWin-RP. ¿Quieres ver el contenido de la actualización?</value>
+    <value>Ya está disponible una nueva actualización de iMusicActivity. ¿Quieres ver el contenido de la actualización?</value>
   </data>
   <data name="Settings_Title" xml:space="preserve">
     <value>Configuración</value>
