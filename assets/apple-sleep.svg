@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <circle cx="32" cy="32" r="28" fill="#2B2D31"/>
+  <path d="M20 28h8" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+  <path d="M36 28h8" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+  <path d="M24 40c3 3 13 3 16 0" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+  <text x="46" y="18" fill="#fff" font-size="10" font-family="Segoe UI, sans-serif">z</text>
+</svg>
