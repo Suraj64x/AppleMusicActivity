@@ -1,23 +1,25 @@
 <div align="center">
 
-<img src="assets/icon.png" width="120" alt="iMusicActivity">
+<img src="assets/icon.png" width="112" alt="iMusicActivity">
 
 # iMusicActivity
 
-Apple Music on Windows, live on Discord.
+**Apple Music on Windows, live on Discord.**
 
-<br>
-
-<img src="assets/hero.svg" width="640" alt="">
+<sub>Play a song. Your friends see it.</sub>
 
 <br><br>
 
-<a href="https://github.com/Suraj64x/AppleMusicActivity/releases/download/v1.4.0/iMusicActivity.exe">
-  <img src="https://img.shields.io/badge/Download-v1.4.0-FA2D48?style=for-the-badge&logo=windows&logoColor=white" alt="Download v1.4.0">
+<img src="assets/presence.png" width="520" alt="Discord profile showing Listening to Apple Music: If You Wanna by Rarin, with album art and a progress bar">
+
+<br><br>
+
+<a href="https://github.com/Suraj64x/AppleMusicActivity/releases/download/v2.4.0/iMusicActivity.exe">
+  <img src="https://img.shields.io/badge/Download-v2.4.0-FA2D48?style=for-the-badge&logo=windows&logoColor=white" alt="Download v2.4.0">
 </a>
 &nbsp;
-<a href="https://github.com/Suraj64x/AppleMusicActivity/releases/tag/v1.4.0">
-  <img src="https://img.shields.io/badge/Release-1.4.0-2B2D31?style=for-the-badge" alt="Release">
+<a href="https://github.com/Suraj64x/AppleMusicActivity/releases/tag/v2.4.0">
+  <img src="https://img.shields.io/badge/Release-2.4.0-2B2D31?style=for-the-badge" alt="Release">
 </a>
 
 <br><br>
@@ -54,8 +56,7 @@ Apple Music on Windows, live on Discord.
 
 <br>
 
-Play Apple Music. Discord shows it.<br>
-Optional lyrics. Optional scrobbles. One tray icon.
+<sub>Optional lyrics &nbsp;·&nbsp; optional scrobbles &nbsp;·&nbsp; one tray icon</sub>
 
 </div>
 
@@ -63,7 +64,7 @@ Optional lyrics. Optional scrobbles. One tray icon.
 
 ## <img src="assets/faces/sunny.svg" width="28" align="top" alt=""> Install
 
-<img src="assets/faces/mint.svg" width="18" align="top" alt=""> &nbsp;[Download v1.4.0](https://github.com/Suraj64x/AppleMusicActivity/releases/download/v1.4.0/iMusicActivity.exe)<br>
+<img src="assets/faces/mint.svg" width="18" align="top" alt=""> &nbsp;[Download v2.4.0](https://github.com/Suraj64x/AppleMusicActivity/releases/download/v2.4.0/iMusicActivity.exe)<br>
 <img src="assets/faces/fresh.svg" width="18" align="top" alt=""> &nbsp;Use [Apple Music from the Store](https://apps.microsoft.com/detail/9PFHDD62MXS1)<br>
 <img src="assets/faces/dusk.svg" width="18" align="top" alt=""> &nbsp;Install [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/10.0) if Windows asks<br>
 <img src="assets/faces/peach.svg" width="18" align="top" alt=""> &nbsp;Run the exe, then turn on Discord **Activity Status**
@@ -118,6 +119,6 @@ Logs live in `%localappdata%\iMusicActivity`. Something off? [Open an issue](htt
 
 **Made with love by SMOKiE**
 
-<sub>[GPL-3.0](LICENSE) &nbsp;·&nbsp; includes [AMWin-RP](https://github.com/PKBeam/AMWin-RP) by [PKBeam](https://github.com/PKBeam)</sub>
+<sub>[GPL-3.0](LICENSE) &nbsp;·&nbsp; Logo headphones based on an icon by <a href="https://www.flaticon.com/authors/smashingstocks">smashingstocks</a> from <a href="https://www.flaticon.com/free-icon/headphone_5754910">Flaticon</a></sub>
 
 </div>
