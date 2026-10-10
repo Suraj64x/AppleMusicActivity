@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/icon.png" width="112" alt="iMusicActivity">
+<img src="assets/icon.png" width="120" alt="iMusicActivity">
 
 # iMusicActivity
 
@@ -8,11 +8,11 @@
 
 <sub>Play a song. Your friends see it.</sub>
 
-<br><br>
+<br>
 
-<img src="assets/presence.png" width="520" alt="Discord profile showing Listening to Apple Music: If You Wanna by Rarin, with album art and a progress bar">
+<img src="assets/presence.png" width="480" alt="Discord showing Listening to Apple Music">
 
-<br><br>
+<br>
 
 <a href="https://github.com/Suraj64x/AppleMusicActivity/releases/download/v2.4.0/iMusicActivity.exe">
   <img src="https://img.shields.io/badge/Download-v2.4.0-FA2D48?style=for-the-badge&logo=windows&logoColor=white" alt="Download v2.4.0">
@@ -27,9 +27,9 @@
 <img src="https://img.shields.io/badge/Windows%2011-0078D4?style=flat&logo=windows&logoColor=white" alt="Windows 11">
 <img src="https://img.shields.io/badge/Apple%20Music-FA2D48?style=flat&logo=applemusic&logoColor=white" alt="Apple Music">
 <img src="https://img.shields.io/badge/Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord">
-<img src="https://img.shields.io/badge/GPL--3.0-2B2D31?style=flat" alt="GPL-3.0">
 
 <br><br>
+
 <img src="assets/dots.svg" width="70" alt="">
 
 <br><br>
@@ -56,69 +56,68 @@
 
 <br>
 
+<img src="assets/faces/sunny.svg" width="20" alt="">
+&nbsp;
 <sub>Optional lyrics &nbsp;·&nbsp; optional scrobbles &nbsp;·&nbsp; one tray icon</sub>
+&nbsp;
+<img src="assets/faces/blush.svg" width="20" alt="">
 
-</div>
+<br><br>
 
-<br>
+## <img src="assets/faces/mint.svg" width="26" align="top" alt=""> &nbsp;Install
 
-## <img src="assets/faces/sunny.svg" width="28" align="top" alt=""> Install
-
-<img src="assets/faces/mint.svg" width="18" align="top" alt=""> &nbsp;[Download v2.4.0](https://github.com/Suraj64x/AppleMusicActivity/releases/download/v2.4.0/iMusicActivity.exe)<br>
-<img src="assets/faces/fresh.svg" width="18" align="top" alt=""> &nbsp;Use [Apple Music from the Store](https://apps.microsoft.com/detail/9PFHDD62MXS1)<br>
-<img src="assets/faces/dusk.svg" width="18" align="top" alt=""> &nbsp;Install [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/10.0) if Windows asks<br>
-<img src="assets/faces/peach.svg" width="18" align="top" alt=""> &nbsp;Run the exe, then turn on Discord **Activity Status**
-
-> [!TIP]
-> Keep Apple Music and iMusicActivity on the same virtual desktop.
+[Download v2.4.0](https://github.com/Suraj64x/AppleMusicActivity/releases/download/v2.4.0/iMusicActivity.exe)<br>
+Use [Apple Music from the Store](https://apps.microsoft.com/detail/9PFHDD62MXS1)<br>
+Install [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/10.0) if Windows asks<br>
+Run the exe, then turn on Discord **Activity Status**
 
 <br>
 
-## <img src="assets/faces/fresh.svg" width="28" align="top" alt=""> Setup
+<sub>Keep Apple Music and iMusicActivity on the same virtual desktop.</sub>
+
+<br><br>
+
+## <img src="assets/faces/fresh.svg" width="26" align="top" alt=""> &nbsp;Setup
 
 Double-click the tray icon.
 
 <table>
   <tr>
-    <td align="center" width="300">
+    <td align="center" width="280">
       <b>Last.fm</b><br>
       <sub>API key, secret, username, password</sub>
     </td>
-    <td align="center" width="300">
+    <td align="center" width="280">
       <b>ListenBrainz</b><br>
       <sub>User token</sub>
     </td>
   </tr>
 </table>
 
-<img src="assets/faces/sleep.svg" width="18" align="top" alt=""> &nbsp;Passwords live in Windows Credential Manager. Offline listens are not saved.
+<sub>Passwords live in Windows Credential Manager. Offline listens are not saved.</sub>
 
-<br>
+<br><br>
 
-## <img src="assets/faces/dusk.svg" width="28" align="top" alt=""> Build
+## <img src="assets/faces/dusk.svg" width="26" align="top" alt=""> &nbsp;Build
 
 ```bat
 dotnet publish iMusicActivity/iMusicActivity.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true
 ```
 
-Logs live in `%localappdata%\iMusicActivity`. Something off? [Open an issue](https://github.com/Suraj64x/AppleMusicActivity/issues).
+<sub>Logs live in <code>%localappdata%\iMusicActivity</code> · <a href="https://github.com/Suraj64x/AppleMusicActivity/issues">Open an issue</a></sub>
 
-<br>
-
-<div align="center">
+<br><br>
 
 <img src="assets/faces/sunny.svg" width="22" alt="">
-<img src="assets/faces/fresh.svg" width="22" alt="">
-<img src="assets/faces/blush.svg" width="22" alt="">
-<img src="assets/apple.svg" width="30" alt="">
-<img src="assets/faces/dusk.svg" width="22" alt="">
 <img src="assets/faces/peach.svg" width="22" alt="">
 <img src="assets/faces/mint.svg" width="22" alt="">
+<img src="assets/icon.png" width="28" alt="">
+<img src="assets/faces/dusk.svg" width="22" alt="">
+<img src="assets/faces/blush.svg" width="22" alt="">
+<img src="assets/faces/sleep.svg" width="22" alt="">
 
 <br><br>
 
 **Made with love by SMOKiE**
-
-<sub>[GPL-3.0](LICENSE) &nbsp;·&nbsp; Logo headphones based on an icon by <a href="https://www.flaticon.com/authors/smashingstocks">smashingstocks</a> from <a href="https://www.flaticon.com/free-icon/headphone_5754910">Flaticon</a></sub>
 
 </div>
