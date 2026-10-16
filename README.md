@@ -160,9 +160,17 @@ Issues and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) and
 
 iMusicActivity isn't affiliated with Apple or Discord. Apple Music is a trademark of Apple Inc.
 
-<br>
+---
 
 <div align="center">
-<img src="assets/icon.png" width="32" alt=""><br>
-<sub>Made by <b>SMOKiE</b></sub>
+
+<br>
+
+<img src="assets/icon.png" width="72" alt="iMusicActivity logo">
+
+**iMusicActivity**<br>
+<sub>Apple Music on Windows, live on Discord.</sub>
+
+<sub><a href="https://github.com/Suraj64x/AppleMusicActivity/releases/latest">Download</a> &nbsp;·&nbsp; <a href="https://github.com/Suraj64x/AppleMusicActivity/issues">Report an issue</a> &nbsp;·&nbsp; Made by <b>SMOKiE</b></sub>
+
 </div>
