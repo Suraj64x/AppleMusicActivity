@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/icon.png" width="128" alt="iMusicActivity logo">
+<img src="assets/logo.png" width="128" alt="iMusicActivity logo">
 
 # iMusicActivity
 
@@ -166,7 +166,7 @@ iMusicActivity isn't affiliated with Apple or Discord. Apple Music is a trademar
 
 <br>
 
-<img src="assets/icon.png" width="72" alt="iMusicActivity logo">
+<img src="assets/logo.png" width="72" alt="iMusicActivity logo">
 
 **iMusicActivity**<br>
 <sub>Apple Music on Windows, live on Discord.</sub>
