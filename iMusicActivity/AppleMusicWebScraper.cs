@@ -311,18 +311,55 @@ namespace iMusicActivity {
 
         // Get album artwork image
         // -----------------------------------------------
-        // Supported APIs: Last.FM, Apple Music web search
+        // Supported APIs: Last.FM, Apple Music web search, iTunes Search API
         public async Task<string?> GetAlbumArtUrl() {
             try {
                 var lastFmImg = (lastFmApiKey == null || lastFmApiKey == "") ? null : await GetAlbumArtUrlLastFm();
                 if (lastFmApiKey != null && lastFmImg == null) {
                     logger?.Log($"[GetAlbumArtUrl] LastFM lookup failed, falling back to Apple Music Web");
                 }
-                return lastFmImg ?? await GetAlbumArtUrlAppleMusic();
+                return lastFmImg ?? await GetAlbumArtUrlAppleMusic() ?? await GetAlbumArtUrlITunes();
             } catch (Exception ex) {
                 logger?.Log($"[GetAlbumArtUrl] An exception occurred: {ex}");
                 return null;
             }
+        }
+
+        // Apple's public iTunes Search API returns JSON and finds songs the web search page misses
+        private async Task<string?> GetAlbumArtUrlITunes() {
+            try {
+                // long or non-Latin artist names can make the first search find nothing, so then try the title alone
+                var match = BestITunesTrack(await SearchITunes($"{songName} {songArtist}", "song"))
+                    ?? BestITunesTrack(await SearchITunes(songName, "song"));
+
+                // if the song itself isn't there, use its album's cover
+                match ??= (await SearchITunes($"{AlbumCleaner.CleanAlbumName(songAlbum)} {songArtist}", "album"))
+                    .Where(x => SameAlbum(x) && SharesArtist(x)).Select(x => (JsonElement?)x).FirstOrDefault();
+
+                var art = match?.GetProperty("artworkUrl100").GetString();
+                logger?.Log($"[GetAlbumArtUrlITunes] {(art == null ? "No match" : "Found artwork")} for {songName}");
+                return art == null ? null : UpscaleImageUrl(art);
+            } catch (Exception ex) {
+                logger?.Log($"[GetAlbumArtUrlITunes] An exception occurred: {ex}");
+                return null;
+            }
+        }
+        private async Task<List<JsonElement>> SearchITunes(string term, string entity) {
+            var url = $"https://itunes.apple.com/search?term={Uri.EscapeDataString(term)}&entity={entity}&country={region}&limit=25";
+            using var j = await GetURLJson(url, "SearchITunes");
+            return j.RootElement.GetProperty("results").EnumerateArray().Select(x => x.Clone()).ToList();
+        }
+        // same title, preferring the same album, then any track sharing an artist (so covers by others are skipped)
+        private JsonElement? BestITunesTrack(List<JsonElement> tracks) {
+            var sameTitle = tracks.Where(x => string.Equals(x.GetProperty("trackName").GetString(), songName, StringComparison.OrdinalIgnoreCase)).ToList();
+            return sameTitle.Where(SameAlbum).Concat(sameTitle.Where(SharesArtist)).Select(x => (JsonElement?)x).FirstOrDefault();
+        }
+        private bool SameAlbum(JsonElement x) =>
+            string.Equals(AlbumCleaner.CleanAlbumName(x.GetProperty("collectionName").GetString() ?? ""), AlbumCleaner.CleanAlbumName(songAlbum), StringComparison.OrdinalIgnoreCase);
+        private bool SharesArtist(JsonElement x) {
+            var artist = x.GetProperty("artistName").GetString() ?? "";
+            return songArtist != "" && artist != ""
+                && (artist.Contains(songArtist, StringComparison.OrdinalIgnoreCase) || songArtist.Contains(artist, StringComparison.OrdinalIgnoreCase));
         }
         private async Task<string?> GetAlbumArtUrlLastFm() {
             var url = $"http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={lastFmApiKey}&artist={Uri.EscapeDataString(songArtist)}&album={Uri.EscapeDataString(AlbumCleaner.CleanAlbumName(songAlbum))}&format=json";
