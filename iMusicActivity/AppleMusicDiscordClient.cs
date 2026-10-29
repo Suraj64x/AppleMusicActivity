@@ -136,10 +136,9 @@ internal class AppleMusicDiscordClient {
                 rp.Buttons = buttons.ToArray();
             }
 
-            if (amInfo.IsPaused) {
-                rp.Assets.SmallImageKey = Constants.DiscordAppleMusicPauseImageKey ?? "";
-            } else if (showSmallImage) {
-                rp.Assets.SmallImageKey = ((!showBigImage || amInfo.CoverArtUrl == null) ? Constants.DiscordAppleMusicPlayImageKey : Constants.DiscordAppleMusicImageKey) ?? "";
+            // the large image is already the logo when there's no album art
+            if (showSmallImage && showBigImage && amInfo.CoverArtUrl != null) {
+                rp.Assets.SmallImageKey = Constants.DiscordAppleMusicImageKey;
             }
 
             // add timestamps, if they're there
