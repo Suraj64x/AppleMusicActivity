@@ -16,10 +16,8 @@ namespace iMusicActivity {
         public static int    RefreshPeriod                  = 5; // seconds
         public static int    NumFailedSearchesBeforeAbandon = 5; // attempts
         public static string ApplicationStylisedName        = "iMusicActivity";
-        public static string DiscordClientID                = "1066220978406953012";
+        public static string DiscordClientID                = "1565430630421106799";
         public static string DiscordAppleMusicImageKey      = "applemusic1024x";
-        public static string DiscordAppleMusicPlayImageKey  = "applemusicplay1024x";
-        public static string DiscordAppleMusicPauseImageKey = "applemusicpause1024x";
         public static string LastFMCredentialTargetName     = "Last FM Password";
         public static int    LastFMTimeBeforeScrobbling     = 20; // seconds
         public static string GithubReleasesApiUrl           = "https://api.github.com/repos/Suraj64x/AppleMusicActivity/releases/latest";

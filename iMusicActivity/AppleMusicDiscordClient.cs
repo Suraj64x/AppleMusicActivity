@@ -59,7 +59,7 @@ internal class AppleMusicDiscordClient {
         var songName = TrimString(amInfo.SongName);
         var songSubtitle = amInfo.SongSubTitle.Length > maxStringLength ? amInfo.SongSubTitle.Replace(amInfo.SongArtist, GetTrimmedArtistList(amInfo)) : amInfo.SongSubTitle;
         var songArtist = amInfo.SongArtist.Length > maxStringLength ? GetTrimmedArtistList(amInfo) : amInfo.SongArtist;
-        var songAlbum = TrimString(amInfo.SongAlbum);
+        var songAlbum = TrimString(AlbumCleaner.CleanAlbumName(amInfo.SongAlbum));
 
         // hack to show 1-character song names
         while (songName.Length < 2) {
@@ -136,10 +136,9 @@ internal class AppleMusicDiscordClient {
                 rp.Buttons = buttons.ToArray();
             }
 
-            if (amInfo.IsPaused) {
-                rp.Assets.SmallImageKey = Constants.DiscordAppleMusicPauseImageKey ?? "";
-            } else if (showSmallImage) {
-                rp.Assets.SmallImageKey = ((!showBigImage || amInfo.CoverArtUrl == null) ? Constants.DiscordAppleMusicPlayImageKey : Constants.DiscordAppleMusicImageKey) ?? "";
+            // the large image is already the logo when there's no album art
+            if (showSmallImage && showBigImage && amInfo.CoverArtUrl != null) {
+                rp.Assets.SmallImageKey = Constants.DiscordAppleMusicImageKey;
             }
 
             // add timestamps, if they're there
