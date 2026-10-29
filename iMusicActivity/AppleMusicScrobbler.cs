@@ -89,8 +89,8 @@ namespace iMusicActivity {
         protected abstract Task ScrobbleSong(string artist, string album, string song);
 
         public async void Scrobbleit(AppleMusicInfo info) {
-            // This gets called every five seconds (Constants.RefreshPeriod) when a song is playing. There are some rules before we want to scrobble.
-            // First, when the song changes, start start "our" timer over at 0.  Every time this gets called, increment by five seconds (RefreshPeriod).
+            // This gets called every Constants.RefreshPeriod seconds when a song is playing. There are some rules before we want to scrobble.
+            // First, when the song changes, start start "our" timer over at 0.  Every time this gets called, increment by RefreshPeriod.
             // If we hit the threshold (Constants.LastFMTimeBeforeScrobbling) then go ahead and Scrobble it.  Note that this works well because this method
             //    never gets called when the song is paused!  Also, make sure that we don't keep re-Scrobbling, so set a variable "hasScrobbled" for each song.
             //
@@ -99,8 +99,10 @@ namespace iMusicActivity {
 
             try {
                 var thisSongID = info.SongArtist + info.SongName + info.SongAlbum;
-                var webScraper = new AppleMusicWebScraper(info.SongName, info.SongAlbum, info.SongArtist, region);
-                var artist = Properties.Settings.Default.LastfmScrobblePrimaryArtist ? (await webScraper.GetArtistList()).FirstOrDefault(info.SongArtist) : info.SongArtist;
+                // use the artist list the scraper already fetched, so we don't search the web on every refresh
+                var artist = Properties.Settings.Default.LastfmScrobblePrimaryArtist
+                    ? info.ArtistList?.FirstOrDefault() ?? (await new AppleMusicWebScraper(info.SongName, info.SongAlbum, info.SongArtist, region).GetArtistList()).FirstOrDefault(info.SongArtist)
+                    : info.SongArtist;
                 var album = Properties.Settings.Default.LastfmCleanAlbumName ? AlbumCleaner.CleanAlbumName(info.SongAlbum) : info.SongAlbum;
                 var song = Properties.Settings.Default.LastfmCleanSongName ? SongCleaner.CleanSongName(info.SongName) : info.SongName;
 

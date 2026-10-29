@@ -13,7 +13,7 @@ namespace iMusicActivity {
         public static string ProgramVersion = ProgramVersionBase;
 #endif                        
         public static int    MaxLogFiles                    = 10; // files
-        public static int    RefreshPeriod                  = 5; // seconds
+        public static int    RefreshPeriod                  = 2; // seconds
         public static int    NumFailedSearchesBeforeAbandon = 5; // attempts
         public static string ApplicationStylisedName        = "iMusicActivity";
         public static string DiscordClientID                = "1565430630421106799";
