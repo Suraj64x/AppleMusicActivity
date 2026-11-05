@@ -218,7 +218,7 @@ namespace iMusicActivity {
                 using var json = JsonDocument.Parse(result);
 
                 var verLocal = Constants.ProgramVersionBase;
-                var verRemote = json.RootElement.GetProperty("name").GetString()!;
+                var verRemote = json.RootElement.GetProperty("tag_name").GetString()!;
 
                 var numverLocal = StringVerToInt(verLocal);
                 var numverRemote = StringVerToInt(verRemote);
