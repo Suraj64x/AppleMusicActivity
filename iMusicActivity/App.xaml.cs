@@ -158,7 +158,7 @@ namespace iMusicActivity {
                         listenBrainzScrobblerClient.Scrobbleit(newInfo);
                     }
                 } else {
-                    discordClient.Disable();
+                    discordClient.Clear();
                 }
             }, logger);
         }

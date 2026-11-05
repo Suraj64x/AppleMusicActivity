@@ -104,6 +104,10 @@ namespace iMusicActivity {
         string appleMusicRegion;
         WebReqFailCounters webReqFails = new();
         LRCLibClient lrclibClient;
+        UIA3Automation? automation;
+        int refreshing = 0;
+        Task? webScrapeTask;
+        AppleMusicInfo? webScrapeSong;
 
         public AppleMusicClientScraper(string? lastFmApiKey, int refreshPeriodInSec, bool composerAsArtist, string appleMusicRegion, RefreshHandler refreshHandler, Logger? logger = null) {
             this.refreshHandler = refreshHandler;
@@ -128,37 +132,56 @@ namespace iMusicActivity {
             Refresh(this, null);
         }
 
-        public async void Refresh(object? source, ElapsedEventArgs? e) {
-            try {
-                await GetAppleMusicInfo();
-            } catch (Exception ex) {
-                logger?.Log($"Something went wrong while scraping: {ex}");
+        public void Refresh(object? source, ElapsedEventArgs? e) {
+            // skip this tick if the last refresh is still running, so slow lookups can't pile up
+            if (System.Threading.Interlocked.Exchange(ref refreshing, 1) == 1) {
+                return;
             }
-            refreshHandler(currentSong);
+
+            // always run off the UI thread, so UI Automation never blocks the app
+            Task.Run(async () => {
+                try {
+                    await GetAppleMusicInfo();
+                } catch (Exception ex) {
+                    logger?.Log($"Something went wrong while scraping: {ex}");
+                }
+                try {
+                    refreshHandler(currentSong);
+                } catch (Exception ex) {
+                    logger?.Log($"Something went wrong while updating: {ex}");
+                } finally {
+                    System.Threading.Interlocked.Exchange(ref refreshing, 0);
+                }
+            });
         }
 
         public async Task GetAppleMusicInfo() {
             var isMiniPlayer = true;
             var amProcesses = Process.GetProcessesByName("AppleMusic");
-            if (!amProcesses.Any()) {
+            var processId = amProcesses.FirstOrDefault()?.Id;
+            foreach (var p in amProcesses) {
+                p.Dispose();
+            }
+            if (processId == null) {
                 logger?.Log("Could not find an AppleMusic.exe process");
                 currentSong = null;
                 return;
             }
 
+            // reuse one automation instance; making a new one every refresh is slow.
+            // the timeout stops a frozen Apple Music window from stalling us for long.
+            automation ??= new UIA3Automation { TransactionTimeout = TimeSpan.FromSeconds(3) };
+
             // find apple music windows
-            var windows = new List<AutomationElement>();
-            using (var automation = new UIA3Automation()) {
-                var processId = amProcesses[0].Id;
-                windows = [.. automation.GetDesktop().FindAllChildren(c => c.ByProcessId(processId))];
-                
-                // if no windows on the normal desktop, search for virtual desktops and add them
-                if (windows.Count == 0) {
-                    logger?.Log("No windows found on desktop, trying alternative search");
-                    var vdesktopWin = FlaUI.Core.Application.Attach(processId).GetMainWindow(automation, TimeSpan.FromSeconds(3));
-                    if (vdesktopWin != null) {
-                        windows.Add(vdesktopWin);
-                    }
+            var windows = automation.GetDesktop().FindAllChildren(c => c.ByProcessId(processId.Value)).ToList();
+
+            // if no windows on the normal desktop, search for virtual desktops and add them
+            if (windows.Count == 0) {
+                logger?.Log("No windows found on desktop, trying alternative search");
+                using var app = FlaUI.Core.Application.Attach(processId.Value);
+                var vdesktopWin = app.GetMainWindow(automation, TimeSpan.FromSeconds(3));
+                if (vdesktopWin != null) {
+                    windows.Add(vdesktopWin);
                 }
             }
 
@@ -273,6 +296,7 @@ namespace iMusicActivity {
             var playPauseButton = amSongPanel.FindFirstChild("TransportControl_PlayPauseStop");
             var songProgressSlider = (isMiniPlayer ? amSongPanel.FindFirstChild("Scrubber") : amSongPanel.FindFirstChild("LCD")?.FindFirstChild("LCDScrubber"))?.Patterns.RangeValue.Pattern;
             var songProgressPercent = songProgressSlider == null ? 0 : songProgressSlider.Value / songProgressSlider.Maximum;
+            var readAt = DateTime.UtcNow;
 
             // grab playback status directly from Apple Music for English languages
             if (playPauseButton?.Name == "Play" || playPauseButton?.Name == "Pause") {
@@ -293,28 +317,44 @@ namespace iMusicActivity {
             var currentTimeElement = songFieldsPanel?.FindFirstChild(cf => cf.ByAutomationId("CurrentTime"));
             var remainingDurationElement = songFieldsPanel?.FindFirstChild(cf => cf.ByAutomationId("Duration"));
 
-            // use the Apple Music timestamps, if visible
+            // the Apple Music timestamps, if visible
             if (currentTimeElement != null && remainingDurationElement != null) {
                 currentTime = ParseTimeString(currentTimeElement!.Name);
                 remainingDuration = ParseTimeString(remainingDurationElement!.Name);
-
-                currentSong.PlaybackStart = DateTime.UtcNow - new TimeSpan(0, 0, currentTime ?? 0);
-                currentSong.PlaybackEnd = DateTime.UtcNow + new TimeSpan(0, 0, remainingDuration ?? 0);
             }
 
-            // potentially slow HTTP request
+            // potentially slow HTTP requests: don't start more while the last ones for this song are still running
+            if (webScrapeTask == null || webScrapeTask.IsCompleted || !ReferenceEquals(webScrapeSong, currentSong)) {
+                webScrapeSong = currentSong;
+                webScrapeTask = DoWebScrapes(currentSong, webScraper);
+            }
             // wait up to 2s for the req to finish
-            await Task.WhenAny(DoWebScrapes(webScraper, songProgressPercent), Task.Delay(2000));
+            await Task.WhenAny(webScrapeTask, Task.Delay(2000));
+
+            // once we know the song length, work the timestamps out from the scrubber
+            if (currentSong.SongDuration != null) {
+                double duration = (int)currentSong.SongDuration;
+                currentSong.CurrentTime = (int)(songProgressPercent * duration);
+                SetPlaybackTimes(currentSong, readAt, songProgressPercent * duration, (1 - songProgressPercent) * duration);
+            } else if (currentTime != null && remainingDuration != null) {
+                SetPlaybackTimes(currentSong, readAt, (int)currentTime, (int)remainingDuration);
+            }
         }
 
-
-        private async Task DoWebScrapes(AppleMusicWebScraper webScraper, double songProgressPercent) {
-            if (currentSong == null) {
-                return;
+        // Keep the previous timestamps unless they're more than 2s off (a seek, a pause or a new song).
+        // Recomputing them every refresh makes them jitter by a second, so Discord gets a "new" presence each time.
+        private static void SetPlaybackTimes(AppleMusicInfo song, DateTime readAt, double currentTime, double remaining) {
+            var start = readAt.AddSeconds(-currentTime);
+            if (song.PlaybackStart == null || Math.Abs((start - song.PlaybackStart.Value).TotalSeconds) > 2) {
+                song.PlaybackStart = start;
             }
+            song.PlaybackEnd = song.PlaybackStart.Value.AddSeconds(currentTime + remaining);
+        }
 
+        // results are written to the song they were requested for, even if a new song has started since
+        private async Task DoWebScrapes(AppleMusicInfo song, AppleMusicWebScraper webScraper) {
             // web query for song duration if we don't have it
-            if (currentSong.SongDuration == null && webReqFails.SongDuration < webReqFails.MaxFails) {
+            if (song.SongDuration == null && webReqFails.SongDuration < webReqFails.MaxFails) {
                 var result = await webScraper.GetSongDuration();
                 if (result == null) {
                     webReqFails.SongDuration++;
@@ -324,23 +364,14 @@ namespace iMusicActivity {
                 } else {
                     webReqFails.SongDuration = 0;
                 }
-                currentSong.SongDuration = ParseTimeString(result);
-            }
-
-            if (currentSong.SongDuration != null) {
-                int currentTime = (int)(songProgressPercent * currentSong.SongDuration);
-                int remainingDuration = (int)((1 - songProgressPercent) * currentSong.SongDuration);
-
-                currentSong.CurrentTime = currentTime;
-                currentSong.PlaybackStart = DateTime.UtcNow - new TimeSpan(0, 0, (int)currentTime);
-                currentSong.PlaybackEnd = DateTime.UtcNow + new TimeSpan(0, 0, (int)remainingDuration);
+                song.SongDuration = ParseTimeString(result);
             }
 
             // ================================================
             //  Get song cover art  
             // ------------------------------------------------
 
-            if (currentSong.CoverArtUrl == null && webReqFails.AlbumArt<webReqFails.MaxFails) {
+            if (song.CoverArtUrl == null && webReqFails.AlbumArt<webReqFails.MaxFails) {
                 var result = await webScraper.GetAlbumArtUrl();
                 if (result == null) {
                     webReqFails.AlbumArt++;
@@ -350,14 +381,14 @@ namespace iMusicActivity {
                 } else {
                     webReqFails.AlbumArt = 0;
                 }
-                currentSong.CoverArtUrl = result;
+                song.CoverArtUrl = result;
             }
 
             // ================================================
             //  Get song artists, as a list
             // ------------------------------------------------
 
-            if (currentSong.ArtistList == null && webReqFails.ArtistList < webReqFails.MaxFails) {
+            if (song.ArtistList == null && webReqFails.ArtistList < webReqFails.MaxFails) {
                 var result = await webScraper.GetArtistList();
                 if (result.Count == 0) {
                     webReqFails.ArtistList++;
@@ -367,9 +398,9 @@ namespace iMusicActivity {
                 } else {
                     webReqFails.ArtistList = 0;
                 }
-                currentSong.ArtistList = result;
-                if (currentSong.ArtistList.Count == 0) {
-                    currentSong.ArtistList = null;
+                song.ArtistList = result;
+                if (song.ArtistList.Count == 0) {
+                    song.ArtistList = null;
                 }
 
             }
@@ -378,7 +409,7 @@ namespace iMusicActivity {
             // Get music url
             // ------------------------------------------------
 
-            if (currentSong.SongUrl == null && webReqFails.SongUrl < webReqFails.MaxFails) {
+            if (song.SongUrl == null && webReqFails.SongUrl < webReqFails.MaxFails) {
                 var result = await webScraper.GetSongUrl();
                 if (result == null) {
                     webReqFails.SongUrl++;
@@ -388,14 +419,14 @@ namespace iMusicActivity {
                 } else {
                     webReqFails.SongUrl = 0;
                 }
-                currentSong.SongUrl = result;
+                song.SongUrl = result;
             }
 
             // ================================================
             // Get artist url
             // ------------------------------------------------
 
-            if (currentSong.ArtistUrl == null && webReqFails.ArtistUrl < webReqFails.MaxFails) {
+            if (song.ArtistUrl == null && webReqFails.ArtistUrl < webReqFails.MaxFails) {
                 var result = await webScraper.GetArtistUrl();
                 if (result == null) {
                     webReqFails.ArtistUrl++;
@@ -405,18 +436,18 @@ namespace iMusicActivity {
                 } else {
                     webReqFails.ArtistUrl = 0;
                 }
-                currentSong.ArtistUrl = result;
+                song.ArtistUrl = result;
             }
 
             // ================================================
             // Get lyrics
             // ------------------------------------------------
 
-            if (!currentSong.LyricsSearched && iMusicActivity.Properties.Settings.Default.EnableSyncLyrics) {
-                currentSong.LyricsSearched = true;
-                var result = await lrclibClient.GetSyncedLyrics(currentSong.SongName, currentSong.SongArtist, currentSong.SongDuration);
+            if (!song.LyricsSearched && iMusicActivity.Properties.Settings.Default.EnableSyncLyrics) {
+                song.LyricsSearched = true;
+                var result = await lrclibClient.GetSyncedLyrics(song.SongName, song.SongArtist, song.SongDuration);
                 if (result != null) {
-                    currentSong.SyncedLyrics = result.Lyrics;
+                    song.SyncedLyrics = result.Lyrics;
                 }
             }
         }

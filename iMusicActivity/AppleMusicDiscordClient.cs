@@ -22,6 +22,7 @@ internal class AppleMusicDiscordClient {
     Logger? logger;
     int maxStringLength = 127;
     string? songLyrics = null;
+    bool presenceSet = false;
 
     public AppleMusicDiscordClient(
         string discordClientID,
@@ -150,6 +151,7 @@ internal class AppleMusicDiscordClient {
                 logger?.Log($"Tried to set Discord RP, but no client");
             } else {
                 client.SetPresence(rp);
+                presenceSet = true;
                 logger?.Log($"Set Discord RP to:\n{amInfo}");
             }
 
@@ -157,6 +159,14 @@ internal class AppleMusicDiscordClient {
                 logger?.Log($"Couldn't set Discord RP:\n{ex}");
             }
 
+    }
+    // hide the presence but stay connected, so it comes back instantly when music resumes
+    public void Clear() {
+        if (!presenceSet) {
+            return;
+        }
+        client?.ClearPresence();
+        presenceSet = false;
     }
     public void Enable() {
         if (enabled) {
